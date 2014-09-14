@@ -227,7 +227,7 @@
 /**
  * A random numeric string (digits only) used to encrypt/decrypt strings.
  */
-	Configure::write('Security.cipherSeed', '1276859309657453542496749683645022012');
+	Configure::write('Security.cipherSeed', '1202768593096574535424967496836452012');
 
 /**
  * Apply timestamps with the last modified time to static assets (js, css, images).

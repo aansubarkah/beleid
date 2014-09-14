@@ -6,7 +6,7 @@ class DATABASE_CONFIG {
 		'persistent' => false,
 		'host' => 'localhost',
 		'login' => 'user',
-		'password' => 'jayapura',
+		'password' => 'Ajayapura',
 		'database' => 'beleid',
 	);
 }

@@ -1,11 +1,11 @@
 <?php
 App::uses('AppModel', 'Model');
 /**
- * Filetype Model
+ * Tag Model
  *
- * @property File $File
+ * @property Post $Post
  */
-class Filetype extends AppModel {
+class Tag extends AppModel {
 
 /**
  * Validation rules
@@ -38,23 +38,23 @@ class Filetype extends AppModel {
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
 /**
- * hasMany associations
+ * hasAndBelongsToMany associations
  *
  * @var array
  */
-	public $hasMany = array(
-		'File' => array(
-			'className' => 'File',
-			'foreignKey' => 'filetype_id',
-			'dependent' => false,
+	public $hasAndBelongsToMany = array(
+		'Post' => array(
+			'className' => 'Post',
+			'joinTable' => 'posts_tags',
+			'foreignKey' => 'tag_id',
+			'associationForeignKey' => 'post_id',
+			'unique' => 'keepExisting',
 			'conditions' => '',
 			'fields' => '',
 			'order' => '',
 			'limit' => '',
 			'offset' => '',
-			'exclusive' => '',
 			'finderQuery' => '',
-			'counterQuery' => ''
 		)
 	);
 

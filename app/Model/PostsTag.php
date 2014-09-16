@@ -1,11 +1,13 @@
 <?php
 App::uses('AppModel', 'Model');
 /**
- * Filetype Model
+ * PostsTag Model
  *
- * @property File $File
+ * @property Post $Post
+ * @property Tag $Tag
+ * @property User $User
  */
-class Filetype extends AppModel {
+class PostsTag extends AppModel {
 
 /**
  * Validation rules
@@ -13,9 +15,9 @@ class Filetype extends AppModel {
  * @var array
  */
 	public $validate = array(
-		'name' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
+		'private' => array(
+			'boolean' => array(
+				'rule' => array('boolean'),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
@@ -38,24 +40,31 @@ class Filetype extends AppModel {
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
 /**
- * hasMany associations
+ * belongsTo associations
  *
  * @var array
  */
-	public $hasMany = array(
-		'File' => array(
-			'className' => 'File',
-			'foreignKey' => 'filetype_id',
-			'dependent' => false,
+	public $belongsTo = array(
+		'Post' => array(
+			'className' => 'Post',
+			'foreignKey' => 'post_id',
 			'conditions' => '',
 			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
+			'order' => ''
+		),
+		'Tag' => array(
+			'className' => 'Tag',
+			'foreignKey' => 'tag_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		),
+		'User' => array(
+			'className' => 'User',
+			'foreignKey' => 'user_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
 		)
 	);
-
 }

@@ -1,23 +1,16 @@
 <?php
 App::uses('AppModel', 'Model');
 /**
- * Category Model
+ * User Model
  *
- * @property Category $ParentCategory
- * @property Category $ChildCategory
+ * @property Status $Status
+ * @property Group $Group
+ * @property File $File
  * @property Moderator $Moderator
  * @property Post $Post
+ * @property PostsTag $PostsTag
  */
-class Category extends AppModel {
-
-/**
- * Behaviors
- *
- * @var array
- */
-	public $actsAs = array(
-		'Tree',
-	);
+class User extends AppModel {
 
 /**
  * Validation rules
@@ -25,7 +18,7 @@ class Category extends AppModel {
  * @var array
  */
 	public $validate = array(
-		'name' => array(
+		'username' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
 				//'message' => 'Your custom message here',
@@ -35,7 +28,7 @@ class Category extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		'description' => array(
+		'fullname' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
 				//'message' => 'Your custom message here',
@@ -45,7 +38,47 @@ class Category extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		'lft' => array(
+		'password' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'hash' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'lastlog' => array(
+			'date' => array(
+				'rule' => array('date'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'email' => array(
+			'email' => array(
+				'rule' => array('email'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'status_id' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),
 				//'message' => 'Your custom message here',
@@ -55,19 +88,9 @@ class Category extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		'rght' => array(
+		'group_id' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'active' => array(
-			'boolean' => array(
-				'rule' => array('boolean'),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
@@ -85,9 +108,16 @@ class Category extends AppModel {
  * @var array
  */
 	public $belongsTo = array(
-		'ParentCategory' => array(
-			'className' => 'Category',
-			'foreignKey' => 'parent_id',
+		'Status' => array(
+			'className' => 'Status',
+			'foreignKey' => 'status_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		),
+		'Group' => array(
+			'className' => 'Group',
+			'foreignKey' => 'group_id',
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
@@ -100,9 +130,9 @@ class Category extends AppModel {
  * @var array
  */
 	public $hasMany = array(
-		'ChildCategory' => array(
-			'className' => 'Category',
-			'foreignKey' => 'parent_id',
+		'File' => array(
+			'className' => 'File',
+			'foreignKey' => 'user_id',
 			'dependent' => false,
 			'conditions' => '',
 			'fields' => '',
@@ -115,7 +145,7 @@ class Category extends AppModel {
 		),
 		'Moderator' => array(
 			'className' => 'Moderator',
-			'foreignKey' => 'category_id',
+			'foreignKey' => 'user_id',
 			'dependent' => false,
 			'conditions' => '',
 			'fields' => '',
@@ -128,7 +158,20 @@ class Category extends AppModel {
 		),
 		'Post' => array(
 			'className' => 'Post',
-			'foreignKey' => 'category_id',
+			'foreignKey' => 'user_id',
+			'dependent' => false,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
+		),
+		'PostsTag' => array(
+			'className' => 'PostsTag',
+			'foreignKey' => 'user_id',
 			'dependent' => false,
 			'conditions' => '',
 			'fields' => '',

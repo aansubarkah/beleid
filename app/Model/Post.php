@@ -1,14 +1,17 @@
 <?php
 App::uses('AppModel', 'Model');
 /**
- * Category Model
+ * Post Model
  *
- * @property Category $ParentCategory
- * @property Category $ChildCategory
- * @property Moderator $Moderator
- * @property Post $Post
+ * @property Category $Category
+ * @property User $User
+ * @property Post $ParentPost
+ * @property Update $Update
+ * @property File $File
+ * @property Post $ChildPost
+ * @property Tag $Tag
  */
-class Category extends AppModel {
+class Post extends AppModel {
 
 /**
  * Behaviors
@@ -45,6 +48,36 @@ class Category extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
+		'date' => array(
+			'date' => array(
+				'rule' => array('date'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'link' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'active' => array(
+			'boolean' => array(
+				'rule' => array('boolean'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
 		'lft' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),
@@ -65,9 +98,9 @@ class Category extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		'active' => array(
-			'boolean' => array(
-				'rule' => array('boolean'),
+		'update_id' => array(
+			'numeric' => array(
+				'rule' => array('numeric'),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
@@ -85,9 +118,30 @@ class Category extends AppModel {
  * @var array
  */
 	public $belongsTo = array(
-		'ParentCategory' => array(
+		'Category' => array(
 			'className' => 'Category',
+			'foreignKey' => 'category_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		),
+		'User' => array(
+			'className' => 'User',
+			'foreignKey' => 'user_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		),
+		'ParentPost' => array(
+			'className' => 'Post',
 			'foreignKey' => 'parent_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		),
+		'Update' => array(
+			'className' => 'Update',
+			'foreignKey' => 'update_id',
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
@@ -100,8 +154,21 @@ class Category extends AppModel {
  * @var array
  */
 	public $hasMany = array(
-		'ChildCategory' => array(
-			'className' => 'Category',
+		'File' => array(
+			'className' => 'File',
+			'foreignKey' => 'post_id',
+			'dependent' => false,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
+		),
+		'ChildPost' => array(
+			'className' => 'Post',
 			'foreignKey' => 'parent_id',
 			'dependent' => false,
 			'conditions' => '',
@@ -112,32 +179,28 @@ class Category extends AppModel {
 			'exclusive' => '',
 			'finderQuery' => '',
 			'counterQuery' => ''
-		),
-		'Moderator' => array(
-			'className' => 'Moderator',
-			'foreignKey' => 'category_id',
-			'dependent' => false,
+		)
+	);
+
+
+/**
+ * hasAndBelongsToMany associations
+ *
+ * @var array
+ */
+	public $hasAndBelongsToMany = array(
+		'Tag' => array(
+			'className' => 'Tag',
+			'joinTable' => 'posts_tags',
+			'foreignKey' => 'post_id',
+			'associationForeignKey' => 'tag_id',
+			'unique' => 'keepExisting',
 			'conditions' => '',
 			'fields' => '',
 			'order' => '',
 			'limit' => '',
 			'offset' => '',
-			'exclusive' => '',
 			'finderQuery' => '',
-			'counterQuery' => ''
-		),
-		'Post' => array(
-			'className' => 'Post',
-			'foreignKey' => 'category_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
 		)
 	);
 

@@ -1,11 +1,11 @@
 <?php
 App::uses('AppModel', 'Model');
 /**
- * Filetype Model
+ * Group Model
  *
- * @property File $File
+ * @property User $User
  */
-class Filetype extends AppModel {
+class Group extends AppModel {
 
 /**
  * Validation rules
@@ -43,9 +43,9 @@ class Filetype extends AppModel {
  * @var array
  */
 	public $hasMany = array(
-		'File' => array(
-			'className' => 'File',
-			'foreignKey' => 'filetype_id',
+		'User' => array(
+			'className' => 'User',
+			'foreignKey' => 'group_id',
 			'dependent' => false,
 			'conditions' => '',
 			'fields' => '',

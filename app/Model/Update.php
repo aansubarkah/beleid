@@ -1,11 +1,11 @@
 <?php
 App::uses('AppModel', 'Model');
 /**
- * Filetype Model
+ * Update Model
  *
- * @property File $File
+ * @property Post $Post
  */
-class Filetype extends AppModel {
+class Update extends AppModel {
 
 /**
  * Validation rules
@@ -14,6 +14,16 @@ class Filetype extends AppModel {
  */
 	public $validate = array(
 		'name' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'description' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
 				//'message' => 'Your custom message here',
@@ -43,9 +53,9 @@ class Filetype extends AppModel {
  * @var array
  */
 	public $hasMany = array(
-		'File' => array(
-			'className' => 'File',
-			'foreignKey' => 'filetype_id',
+		'Post' => array(
+			'className' => 'Post',
+			'foreignKey' => 'update_id',
 			'dependent' => false,
 			'conditions' => '',
 			'fields' => '',

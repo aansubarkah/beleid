@@ -48,7 +48,6 @@
         <div class="row">
             <div class="container">
                 <?php echo $this->Session->flash(); ?>
-                <h1>Halo dunia</h1>
                 <?php echo $this->fetch('content'); ?>
             </div>
         </div>
